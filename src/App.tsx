@@ -2,6 +2,8 @@ import { useEffect, useState } from "react"
 import { Formulario } from "./components/Formulario"
 import { Header } from "./components/Header"
 import { Form } from "./interfaces/Form.interface"
+import { APIResp } from './interfaces/ApiResp.Interface';
+import { Clima } from "./components/Clima";
 
 
 export const App = () => {
@@ -12,13 +14,27 @@ export const App = () => {
   })
 
   const [consultar, setConsultar] = useState(false);
+  const [resultadoConsulta, setresultadoConsulta] = useState<APIResp>();
 
   const { ciudad, pais } = valores;
 
+
+
   useEffect(() => {
 
-    
-    console.log(ciudad, pais);
+    const consultarApi = async () => {
+      const apiUrl: string = 'http://api.openweathermap.org/data/2.5'
+      const apiKey: string = '9e94dc457873f0a900180171040195c5'
+      const url: string = `${apiUrl}/weather?q=${ciudad},${pais}&appid=${apiKey}`
+
+      const respuesta: Response = await fetch(url);
+      const resultado: APIResp = await respuesta.json();
+
+      setresultadoConsulta(resultado);
+    }
+
+    if (consultar) consultarApi();
+
   }, [valores])
 
 
@@ -30,10 +46,10 @@ export const App = () => {
         <div className="container">
           <div className="row p-3">
             <div className="col-md-6 mt-2">
-              <Formulario setValores={setValores} />
+              <Formulario setConsultar={setConsultar} setValores={setValores} />
             </div>
             <div className="col-md-6 mt-2">
-              2
+              <Clima resultadoApi={resultadoConsulta} />
             </div>
           </div>
         </div>

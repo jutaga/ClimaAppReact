@@ -4,7 +4,7 @@ import { ErrorMsj } from "./ErrorMsj";
 import { FormularioProps } from "../interfaces/Props.interface";
 
 
-export const Formulario = ({ setValores }: FormularioProps) => {
+export const Formulario = ({ setValores, setConsultar }: FormularioProps) => {
 
     const [busqueda, setBusqueda] = useState<Form>({
         ciudad: '',
@@ -44,6 +44,7 @@ export const Formulario = ({ setValores }: FormularioProps) => {
 
         //Pasarlo al componente principal
         setValores(busqueda);
+        setConsultar(true);
 
     }
 
