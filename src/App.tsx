@@ -4,6 +4,7 @@ import { Header } from "./components/Header"
 import { Form } from "./interfaces/Form.interface"
 import { APIResp } from './interfaces/ApiResp.Interface';
 import { Clima } from "./components/Clima";
+import { ErrorMsj } from "./components/ErrorMsj";
 
 
 export const App = () => {
@@ -15,6 +16,7 @@ export const App = () => {
 
   const [consultar, setConsultar] = useState(false);
   const [resultadoConsulta, setresultadoConsulta] = useState<APIResp>();
+  const [errorApi, setErrorApi] = useState<boolean>(false);
 
   const { ciudad, pais } = valores;
 
@@ -30,26 +32,39 @@ export const App = () => {
       const respuesta: Response = await fetch(url);
       const resultado: APIResp = await respuesta.json();
 
-      setresultadoConsulta(resultado);
+      //Validar SI obtuvo resultados
+      if ((resultado?.cod).toString() === '404') {
+        (setErrorApi(true));
+      } else {
+        setresultadoConsulta(resultado);
+        setErrorApi(false);
+      }
     }
 
     if (consultar) consultarApi();
 
+
   }, [valores])
+
 
 
   return (
     <>
       <Header title='Clima React App' />
 
-      <div className="container-fluid bg-primary opacity-75">
-        <div className="container">
+      <div className="container-fluid main-container ">
+        <div className="container ">
           <div className="row p-3">
             <div className="col-md-6 mt-2">
+              {
+                errorApi && <ErrorMsj mensaje="No encontramos Resultados" />
+              }
               <Formulario setConsultar={setConsultar} setValores={setValores} />
             </div>
             <div className="col-md-6 mt-2">
-              <Clima resultadoApi={resultadoConsulta} />
+              {
+                resultadoConsulta && <Clima resultadoApi={resultadoConsulta} />
+              }
             </div>
           </div>
         </div>

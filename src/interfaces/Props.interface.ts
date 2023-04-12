@@ -17,3 +17,7 @@ export interface FormularioProps {
 export interface ClimaProp {
     resultadoApi: APIResp | undefined;
 }
+
+export interface ErrorMsjProp {
+    mensaje: string;
+}

@@ -50,9 +50,9 @@ export const Formulario = ({ setValores, setConsultar }: FormularioProps) => {
 
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form className="bg-body-secondary p-5 rounded-4" onSubmit={handleSubmit}>
             {
-                error && <ErrorMsj />
+                error && <ErrorMsj mensaje="Todos los Campos son Obligatorios" />
             }
             <div className="form-floating mb-3">
                 <input onChange={handleChange} value={ciudad} autoComplete="off" type="text" className="form-control" name="ciudad" id="ciudad" placeholder="Escoge una Ciudad" />

@@ -1,8 +1,9 @@
+import { ErrorMsjProp } from "../interfaces/Props.interface"
 
-export const ErrorMsj = () => {
+export const ErrorMsj = ({mensaje}: ErrorMsjProp) => {
   return (
     <div className="alert alert-danger text-center">
-        Todos los Campos son Obligatorios
+        {mensaje}
     </div>
   )
 }
