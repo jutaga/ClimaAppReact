@@ -25,7 +25,7 @@ export const App = () => {
   useEffect(() => {
 
     const consultarApi = async () => {
-      const apiUrl: string = 'http://api.openweathermap.org/data/2.5'
+      const apiUrl: string = 'https://api.openweathermap.org/data/2.5'
       const apiKey: string = '9e94dc457873f0a900180171040195c5'
       const url: string = `${apiUrl}/weather?q=${ciudad},${pais}&appid=${apiKey}`
 
